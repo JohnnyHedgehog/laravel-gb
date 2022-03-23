@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,13 +20,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello/{name}', fn (string $name) =>  "<h1>Hello, {$name}</h1>");
 
-// Выводим страницу приветствия
-Route::get('/hello', fn() => "Hello, World!");
+// User routes
+Route::get('/news', [NewsController::class, 'index'])
+    ->name('news');
+Route::get('/news/{id}', [NewsController::class, 'show'])
+    ->where('id','\d+')->name('news.show');
 
-//Выводим страницу с информацией о проекте
-Route::get('/info', fn() => "This is our porject");
-
-//Выводим страницу с новостями
-Route::get('/news', fn() => "Latest news");
+// Admin routes
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function (){
+Route::resource('admin/categories', AdminCategoryController::class);
+Route::resource('admin/news', AdminNewsController::class);
+});
