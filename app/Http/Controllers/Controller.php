@@ -40,18 +40,6 @@ class Controller extends BaseController
                 'description' => $faker->text(100)
             ];
         }
-        function foo (){
-            for ($i = 0; $i < 10; $i++) {
-                $id = $i + 1;
-                $data[] = [
-                    'id' => $id, 
-                    'title' => $faker->jobTitle(),
-                    'author' => $faker->userName(),
-                    'image' => $faker->imageUrl(250, 170),
-                    'status' => $statusList[mt_rand(0,2)],
-                    'description' => $faker->text(100)
-                ];
-        }
 
         return $data;
     }
